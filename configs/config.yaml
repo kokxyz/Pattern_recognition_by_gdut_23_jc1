@@ -1,0 +1,84 @@
+data_paths:
+  annotations_csv_dir: data/annotations_csv
+  annotations_dir: data/annotations
+  images_base_dir: data/images
+  processed_dir: data/processed
+evaluation:
+  metrics:
+  - accuracy
+  - precision
+  - recall
+  - f1
+  - roc_auc
+  plot_confusion_matrix: true
+  plot_feature_importance: true
+  plot_learning_curve: true
+  plot_roc_curve: true
+feature_extraction:
+  augmentation:
+    brightness: 0.3
+    contrast: 0.3
+    enable: true
+    height_shift: 0.2
+    horizontal_flip: true
+    rotation: 45
+    vertical_flip: true
+    width_shift: 0.2
+    zoom: 0.3
+    n_aug_1: 30  # 等级1增强30倍
+    n_aug_2: 30  # 等级2增强30倍
+  deep_learning:
+    feature_layer: avg_pool
+    input_size:
+    - 300
+    - 300
+    model_name: efficientnetb3
+  method: multi_deep
+  pca:
+    variance_ratio: 0.95
+  resampling:
+    k_neighbors: 20
+    random_state: 42
+    smote_type: borderline
+    use_smote: true
+    extreme_oversample: true
+    minority_target_ratio: 5  # 小类采样提升到主类5倍
+  traditional:
+    color_bins: 32
+    surf_features: 500
+    texture_method: lbp
+models:
+  adaboost:
+    algorithm: SAMME.R
+    cv_folds: 5
+    learning_rate:
+    - 0.01
+    - 0.1
+    - 1.0
+    n_estimators:
+    - 50
+    - 100
+    - 200
+  classifiers:
+  - random_forest
+  - adaboost
+  random_forest:
+    cv_folds: 5
+    max_depth:
+    - 10
+    - 20
+    - null
+    min_samples_split:
+    - 2
+    - 5
+    - 10
+    n_estimators:
+    - 100
+    - 200
+    - 300
+training:
+  random_state: 42
+  scoring_metric: f1_weighted
+  test_size: 0.2
+  use_cross_validation: true
+
